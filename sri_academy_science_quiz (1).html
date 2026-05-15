@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sri Academy – Science Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card2: #1c2333;
+    --accent1: #58a6ff;
+    --accent2: #f78166;
+    --accent3: #3fb950;
+    --accent4: #d2a8ff;
+    --accent5: #ff9f43;
+    --gold: #e3b341;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --border: #30363d;
+    --radius: 18px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    padding-bottom: 32px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    padding: 28px 20px 18px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2358a6ff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .academy-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    position: relative;
+  }
+  .academy-name span { color: var(--gold); }
+  .academy-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent1);
+    margin-top: 2px;
+    position: relative;
+  }
+  .atom-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+
+  /* ===== QUOTE CARD ===== */
+  .quote-card {
+    margin: 18px 16px 0;
+    background: linear-gradient(135deg, #1c2333, #161b22);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent4);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    position: relative;
+  }
+  .quote-mark { font-size: 48px; color: var(--accent4); opacity: 0.3; line-height: 1; position: absolute; top: 6px; left: 12px; font-family: Georgia, serif; }
+  .quote-text {
+    font-size: 13.5px;
+    font-style: italic;
+    color: #cdd9e5;
+    line-height: 1.6;
+    padding-left: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .quote-author { font-size: 11.5px; color: var(--accent4); font-weight: 700; margin-top: 8px; text-align: right; }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 24px 20px 10px;
+  }
+
+  /* ===== CATEGORY CARDS ===== */
+  .categories { padding: 0 16px; display: flex; flex-direction: column; gap: 14px; }
+  .cat-card {
+    border-radius: var(--radius);
+    padding: 22px 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 1px solid transparent;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cat-card:active { transform: scale(0.97); }
+  .cat-card.junior {
+    background: linear-gradient(135deg, #0d2137 0%, #0a3d62 100%);
+    border-color: #1a5276;
+    box-shadow: 0 4px 24px rgba(88,166,255,0.15);
+  }
+  .cat-card.senior {
+    background: linear-gradient(135deg, #1a0a2e 0%, #4a235a 100%);
+    border-color: #7d3c98;
+    box-shadow: 0 4px 24px rgba(210,168,255,0.15);
+  }
+  .cat-card.advanced {
+    background: linear-gradient(135deg, #1a0e00 0%, #5a3000 100%);
+    border-color: #a04000;
+    box-shadow: 0 4px 24px rgba(255,159,67,0.18);
+  }
+  .cat-card::after {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+  .cat-card.junior::after { background: var(--accent1); }
+  .cat-card.senior::after { background: var(--accent4); }
+  .cat-card.advanced::after { background: var(--accent5); }
+  .cat-emoji { font-size: 36px; margin-bottom: 10px; display: block; }
+  .cat-label {
+    font-family: 'Baloo 2', cursive;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .cat-label span { display: block; font-size: 13px; font-weight: 600; opacity: 0.7; font-family: 'Nunito', sans-serif; margin-top: 1px; }
+  .cat-badge {
+    position: absolute; top: 18px; right: 18px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .cat-card.junior .cat-badge { color: var(--accent1); background: rgba(88,166,255,0.15); }
+  .cat-card.senior .cat-badge { color: var(--accent4); background: rgba(210,168,255,0.15); }
+  .cat-card.advanced .cat-badge { color: var(--accent5); background: rgba(255,159,67,0.15); }
+  .cat-arrow { position: absolute; bottom: 18px; right: 18px; font-size: 20px; opacity: 0.5; }
+  .cat-timer-info {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700; margin-top: 8px;
+    opacity: 0.65;
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 3px 9px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.82);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 390px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    animation: pop 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes pop { from { transform: scale(0.8); opacity:0; } to { transform: scale(1); opacity:1; } }
+  .modal-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+  .modal label { display: block; font-size: 13px; font-weight: 700; color: var(--accent1); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .modal input, .modal select {
+    width: 100%; background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 16px;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .modal input:focus, .modal select:focus { border-color: var(--accent1); }
+  .modal select option { background: #1c2333; }
+  .modal-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 14px;
+    border: none;
+    font-family: 'Baloo 2', cursive;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 4px;
+  }
+  .modal-btn:active { transform: scale(0.97); }
+  .modal-btn.primary {
+    background: linear-gradient(135deg, var(--accent1), #1a7bcc);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(88,166,255,0.35);
+  }
+  .modal-btn.senior-btn {
+    background: linear-gradient(135deg, var(--accent4), #7d3c98);
+    box-shadow: 0 4px 16px rgba(210,168,255,0.35);
+    color: #fff;
+  }
+  .modal-btn.advanced-btn {
+    background: linear-gradient(135deg, var(--accent5), #a04000);
+    box-shadow: 0 4px 16px rgba(255,159,67,0.35);
+    color: #fff;
+  }
+
+  /* ===== QUIZ PAGE ===== */
+  #quiz-page { display: none; }
+  .quiz-header {
+    padding: 18px 20px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+  .back-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+  }
+  .quiz-header-info { flex: 1; }
+  .quiz-category-label {
+    font-family: 'Baloo 2', cursive;
+    font-size: 17px;
+    font-weight: 800;
+  }
+  .quiz-student-info { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  .progress-bar-wrap { padding: 0 20px 14px; }
+  .progress-bar-bg { height: 6px; background: var(--border); border-radius: 99px; margin-top: 10px; }
+  .progress-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent1), var(--accent4)); transition: width 0.4s; }
+  .progress-text { font-size: 11px; color: var(--muted); margin-top: 4px; text-align: right; }
+
+  /* ===== QUESTION CARD ===== */
+  .questions-list { padding: 8px 16px 16px; display: flex; flex-direction: column; gap: 16px; }
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 16px 16px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .q-card.answered-correct { border-color: var(--accent3); }
+  .q-card.answered-wrong { border-color: var(--accent2); }
+  .q-card.time-expired { border-color: var(--gold); opacity: 0.85; }
+  .q-card.locked {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .q-card.locked .q-timer-num { color: var(--muted); }
+  .locked-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 3px 10px;
+    margin-bottom: 10px;
+  }
+  .q-num {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent1);
+    margin-bottom: 8px;
+  }
+  .q-num.senior-q { color: var(--accent4); }
+  .q-num.advanced-q { color: var(--accent5); }
+  .q-text { font-size: 15px; font-weight: 600; line-height: 1.55; color: var(--text); margin-bottom: 14px; }
+
+  /* Per-question timer */
+  .q-timer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .q-timer-bar-bg {
+    flex: 1;
+    height: 5px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .q-timer-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--accent3);
+    transition: width 1s linear, background 0.3s;
+  }
+  .q-timer-bar-fill.warn { background: var(--gold); }
+  .q-timer-bar-fill.danger { background: var(--accent2); }
+  .q-timer-num {
+    font-size: 11px;
+    font-weight: 800;
+    font-family: 'Baloo 2', cursive;
+    min-width: 28px;
+    text-align: right;
+    color: var(--muted);
+  }
+  .q-timer-num.warn { color: var(--gold); }
+  .q-timer-num.danger { color: var(--accent2); }
+
+  /* MCQ Options */
+  .q-options { display: flex; flex-direction: column; gap: 9px; }
+  .option-btn {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.4;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .option-btn:active:not(:disabled) { transform: scale(0.98); }
+  .option-btn .opt-letter {
+    min-width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.selected { border-color: var(--accent1); background: rgba(88,166,255,0.1); color: var(--accent1); }
+  .option-btn.selected .opt-letter { background: var(--accent1); color: #fff; }
+  .option-btn.correct-ans { border-color: var(--accent3); background: rgba(63,185,80,0.12); color: var(--accent3); }
+  .option-btn.correct-ans .opt-letter { background: var(--accent3); color: #fff; }
+  .option-btn.wrong-ans { border-color: var(--accent2); background: rgba(247,129,102,0.12); color: var(--accent2); }
+  .option-btn.wrong-ans .opt-letter { background: var(--accent2); color: #fff; }
+
+  /* Feedback pill */
+  .q-feedback {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    animation: fadeIn 0.2s ease;
+  }
+  .q-feedback.show { display: block; }
+  .q-feedback.fb-correct { background: rgba(63,185,80,0.12); color: var(--accent3); border: 1px solid rgba(63,185,80,0.25); }
+  .q-feedback.fb-wrong { background: rgba(247,129,102,0.1); color: var(--accent2); border: 1px solid rgba(247,129,102,0.25); }
+  .q-feedback.fb-timeout { background: rgba(227,179,65,0.1); color: var(--gold); border: 1px solid rgba(227,179,65,0.25); }
+  .q-feedback .fb-answer { margin-top: 4px; font-size: 12px; font-weight: 600; opacity: 0.85; }
+
+  /* Show Answer button */
+  .show-answer-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: not-allowed;
+    transition: all 0.2s;
+    opacity: 0.45;
+  }
+  .show-answer-btn.enabled {
+    color: var(--accent1);
+    border-color: rgba(88,166,255,0.4);
+    background: rgba(88,166,255,0.06);
+    cursor: pointer;
+    opacity: 1;
+  }
+  .show-answer-btn.enabled:active { transform: scale(0.98); }
+  .show-answer-btn.advanced-enabled {
+    color: var(--accent5);
+    border-color: rgba(255,159,67,0.4);
+    background: rgba(255,159,67,0.06);
+    cursor: pointer;
+    opacity: 1;
+  }
+  .show-answer-btn.senior-enabled {
+    color: var(--accent4);
+    border-color: rgba(210,168,255,0.4);
+    background: rgba(210,168,255,0.06);
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  @keyframes fadeIn { from { opacity:0; transform: translateY(-4px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ===== SUBMIT ===== */
+  .submit-section { padding: 8px 16px 24px; }
+  .submit-btn {
+    width: 100%;
+    padding: 17px;
+    border-radius: 16px;
+    border: none;
+    font-family: 'Baloo 2', cursive;
+    font-size: 19px;
+    font-weight: 800;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--accent3), #1a7a2a);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(63,185,80,0.3);
+    transition: transform 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .submit-btn:active { transform: scale(0.97); }
+
+  /* ===== MARKSHEET ===== */
+  #marksheet-page { display: none; }
+  .marksheet-wrap { padding: 20px 16px; }
+  .ms-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .ms-header {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    padding: 28px 24px 22px;
+    text-align: center;
+    position: relative;
+  }
+  .ms-trophy { font-size: 48px; display: block; margin-bottom: 8px; }
+  .ms-title { font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; color: var(--gold); }
+  .ms-academy { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent1); margin-top: 2px; }
+  .ms-divider { height: 1px; background: var(--border); margin: 0 24px; }
+  .ms-body { padding: 22px 24px; }
+  .ms-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+    font-size: 14px;
+  }
+  .ms-row:last-child { border-bottom: none; }
+  .ms-row-label { color: var(--muted); font-weight: 600; }
+  .ms-row-val { font-weight: 800; color: var(--text); font-size: 15px; }
+  .ms-score-big {
+    text-align: center;
+    margin: 18px 0 14px;
+    padding: 22px;
+    background: var(--card2);
+    border-radius: 18px;
+  }
+  .ms-score-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 54px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .ms-score-denom { font-size: 16px; color: var(--muted); margin-top: 4px; }
+  .ms-percent { font-size: 14px; font-weight: 700; margin-top: 6px; }
+  .ms-remark {
+    text-align: center;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Baloo 2', cursive;
+    margin-top: 4px;
+  }
+  .remark-excellent { background: rgba(227,179,65,0.15); color: var(--gold); border: 1px solid rgba(227,179,65,0.3); }
+  .remark-great { background: rgba(63,185,80,0.12); color: var(--accent3); border: 1px solid rgba(63,185,80,0.25); }
+  .remark-good { background: rgba(88,166,255,0.12); color: var(--accent1); border: 1px solid rgba(88,166,255,0.25); }
+  .remark-try { background: rgba(247,129,102,0.12); color: var(--accent2); border: 1px solid rgba(247,129,102,0.25); }
+  .ms-back-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-family: 'Baloo 2', cursive;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* ===== HOME PAGE ===== */
+  #home-page {}
+  .footer-note { text-align: center; font-size: 11px; color: var(--muted); padding: 20px 16px 0; opacity: 0.6; }
+</style>
+</head>
+<body>
+
+<!-- ======= HOME PAGE ======= -->
+<div id="home-page">
+  <div class="header">
+    <span class="atom-icon">⚛️</span>
+    <div class="academy-name"><span>Sri</span> Academy</div>
+    <div class="academy-sub">Science Quiz Center</div>
+  </div>
+
+  <div class="quote-card">
+    <div class="quote-mark">"</div>
+    <div class="quote-text" id="daily-quote">Loading today's quote...</div>
+    <div class="quote-author" id="quote-author">— Loading</div>
+  </div>
+
+  <div class="section-title">📚 Choose Your Level</div>
+
+  <div class="categories">
+    <div class="cat-card junior" onclick="openModal('junior')">
+      <span class="cat-emoji">🌱</span>
+      <div class="cat-label">
+        Classes 3 – 5
+        <span>Junior Science Explorer</span>
+      </div>
+      <div class="cat-badge">15 Questions</div>
+      <div class="cat-timer-info">⏱ 45 sec per question</div>
+      <div class="cat-arrow">→</div>
+    </div>
+    <div class="cat-card senior" onclick="openModal('senior')">
+      <span class="cat-emoji">🔬</span>
+      <div class="cat-label">
+        Classes 6 – 8
+        <span>Senior Science Scholar</span>
+      </div>
+      <div class="cat-badge">15 Questions</div>
+      <div class="cat-timer-info">⏱ 35 sec per question</div>
+      <div class="cat-arrow">→</div>
+    </div>
+    <div class="cat-card advanced" onclick="openModal('advanced')">
+      <span class="cat-emoji">🚀</span>
+      <div class="cat-label">
+        Classes 9 – 10
+        <span>Advanced Science Champion</span>
+      </div>
+      <div class="cat-badge">15 Questions</div>
+      <div class="cat-timer-info">⏱ 25 sec per question</div>
+      <div class="cat-arrow">→</div>
+    </div>
+  </div>
+
+  <div class="footer-note">Questions refresh daily · Randomised for every student</div>
+</div>
+
+<!-- ======= STUDENT INFO MODAL ======= -->
+<div class="modal-overlay" id="student-modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">🎒 Junior Quiz</div>
+    <div class="modal-sub">Please enter your details to begin</div>
+    <label>Your Full Name</label>
+    <input type="text" id="student-name" placeholder="e.g. Arjun Kumar" autocomplete="off">
+    <label>Your Standard / Class</label>
+    <select id="student-std">
+      <option value="">— Select Standard —</option>
+    </select>
+    <button class="modal-btn primary" id="start-quiz-btn" onclick="startQuiz()">Start Quiz →</button>
+  </div>
+</div>
+
+<!-- ======= QUIZ PAGE ======= -->
+<div id="quiz-page">
+  <div class="quiz-header">
+    <button class="back-btn" onclick="goHome()">← Home</button>
+    <div class="quiz-header-info">
+      <div class="quiz-category-label" id="quiz-cat-label">Science Quiz</div>
+      <div class="quiz-student-info" id="quiz-student-info">Student info</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-text" id="progress-text">0 / 15 answered</div>
+  </div>
+  <div class="questions-list" id="questions-list"></div>
+  <div class="submit-section">
+    <button class="submit-btn" onclick="submitQuiz()">🎯 Submit &amp; See Results</button>
+  </div>
+</div>
+
+<!-- ======= MARKSHEET PAGE ======= -->
+<div id="marksheet-page">
+  <div class="marksheet-wrap">
+    <div class="ms-card">
+      <div class="ms-header">
+        <span class="ms-trophy" id="ms-trophy">🏆</span>
+        <div class="ms-title">Report Card</div>
+        <div class="ms-academy">Sri Academy · Science Quiz</div>
+      </div>
+      <div class="ms-divider"></div>
+      <div class="ms-body">
+        <div class="ms-score-big">
+          <div class="ms-score-num" id="ms-score-num">0</div>
+          <div class="ms-score-denom" id="ms-score-denom">out of 15</div>
+          <div class="ms-percent" id="ms-percent">0%</div>
+        </div>
+        <div class="ms-row">
+          <span class="ms-row-label">✅ Correct</span>
+          <span class="ms-row-val" id="ms-correct" style="color:var(--accent3)">—</span>
+        </div>
+        <div class="ms-row">
+          <span class="ms-row-label">❌ Wrong</span>
+          <span class="ms-row-val" id="ms-wrong" style="color:var(--accent2)">—</span>
+        </div>
+        <div class="ms-row">
+          <span class="ms-row-label">👤 Student Name</span>
+          <span class="ms-row-val" id="ms-name">—</span>
+        </div>
+        <div class="ms-row">
+          <span class="ms-row-label">🏫 Standard</span>
+          <span class="ms-row-val" id="ms-std">—</span>
+        </div>
+        <div class="ms-row">
+          <span class="ms-row-label">📚 Category</span>
+          <span class="ms-row-val" id="ms-cat">—</span>
+        </div>
+        <div class="ms-row">
+          <span class="ms-row-label">📅 Date</span>
+          <span class="ms-row-val" id="ms-date">—</span>
+        </div>
+        <div class="ms-remark" id="ms-remark">—</div>
+      </div>
+    </div>
+    <button class="ms-back-btn" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+const SCIENCE_QUOTES = [
+  { text: "The important thing is not to stop questioning. Curiosity has its own reason for existence.", author: "Albert Einstein" },
+  { text: "Science is not only a discipline of reason but also one of romance and passion.", author: "Stephen Hawking" },
+  { text: "The good thing about science is that it's true whether or not you believe in it.", author: "Neil deGrasse Tyson" },
+  { text: "Somewhere, something incredible is waiting to be known.", author: "Carl Sagan" },
+  { text: "Science knows no country, because knowledge belongs to humanity.", author: "Louis Pasteur" },
+  { text: "In science, there are no shortcuts to truth.", author: "Karl Popper" },
+  { text: "The science of today is the technology of tomorrow.", author: "Edward Teller" },
+  { text: "Research is what I'm doing when I don't know what I'm doing.", author: "Wernher von Braun" },
+  { text: "To raise new questions, new possibilities, to regard old problems from a new angle, requires creative imagination.", author: "Albert Einstein" },
+  { text: "Science is the key to our future and if you don't believe in science, then you're holding everybody back.", author: "Bill Nye" },
+  { text: "An investment in knowledge pays the best interest.", author: "Benjamin Franklin" },
+  { text: "The most beautiful thing we can experience is the mysterious.", author: "Albert Einstein" },
+  { text: "Nature is not our enemy, to be raped and conquered. Nature is ourselves, to be cherished and explored.", author: "Terence McKenna" },
+  { text: "The universe is under no obligation to make sense to you.", author: "Neil deGrasse Tyson" },
+  { text: "Discovery consists of seeing what everybody has seen and thinking what nobody has thought.", author: "Albert Szent-Györgyi" },
+  { text: "The most exciting phrase to hear in science is 'That's funny...'", author: "Isaac Asimov" },
+  { text: "Science is a way of thinking much more than it is a body of knowledge.", author: "Carl Sagan" },
+  { text: "In every walk with nature, one receives far more than he seeks.", author: "John Muir" },
+  { text: "Facts do not cease to exist because they are ignored.", author: "Aldous Huxley" },
+  { text: "The whole of science is nothing more than a refinement of everyday thinking.", author: "Albert Einstein" },
+  { text: "Look deep into nature, and then you will understand everything better.", author: "Albert Einstein" },
+  { text: "Without data, you're just another person with an opinion.", author: "W. Edwards Deming" },
+  { text: "Nothing in life is to be feared. It is only to be understood.", author: "Marie Curie" },
+  { text: "Equipped with his five senses, man explores the universe around him and calls the adventure Science.", author: "Edwin Powell Hubble" },
+  { text: "The first step in wisdom is to know the things themselves.", author: "Carl Linnaeus" },
+  { text: "What we know is a drop, what we don't know is an ocean.", author: "Isaac Newton" },
+  { text: "The most incomprehensible thing about the world is that it is at all comprehensible.", author: "Albert Einstein" },
+  { text: "Science is built up of facts, as a house is built of stones; but an accumulation of facts is no more science than a heap of stones is a house.", author: "Henri Poincaré" },
+  { text: "Equipped with his five senses, man explores the universe around him and calls the adventure Science.", author: "Edwin Hubble" },
+  { text: "The scientist is not a person who gives the right answers, he is one who asks the right questions.", author: "Claude Lévi-Strauss" },
+];
+
+// ===== JUNIOR QUESTIONS (Classes 3-5) — 45 questions, pick 15 per day =====
+const JUNIOR_QUESTIONS = [
+  { q: "What do plants need to make their own food through photosynthesis?", a: "Sunlight, water, and carbon dioxide (CO₂)." },
+  { q: "Which planet is known as the Red Planet?", a: "Mars. Its reddish colour comes from iron oxide (rust) on its surface." },
+  { q: "What is the process by which water turns into vapour called?", a: "Evaporation." },
+  { q: "How many bones does an adult human body have?", a: "206 bones." },
+  { q: "What is the centre of an atom called?", a: "The nucleus." },
+  { q: "What state of matter has no fixed shape but a fixed volume?", a: "Liquid." },
+  { q: "Which organ pumps blood throughout the human body?", a: "The heart." },
+  { q: "What is the hardest natural substance on Earth?", a: "Diamond." },
+  { q: "What gas do plants release during photosynthesis?", a: "Oxygen." },
+  { q: "Which planet is closest to the Sun?", a: "Mercury." },
+  { q: "What is the boiling point of water at sea level?", a: "100°C (212°F)." },
+  { q: "What force pulls objects towards the Earth?", a: "Gravity." },
+  { q: "What type of animal is a frog — mammal, reptile, or amphibian?", a: "Amphibian. Frogs can live both in water and on land." },
+  { q: "What is rain, snow, and hail collectively called?", a: "Precipitation." },
+  { q: "Name the three primary colours of light.", a: "Red, Green, and Blue (RGB)." },
+  { q: "What part of the plant absorbs water and nutrients from the soil?", a: "The roots." },
+  { q: "What is the closest star to Earth?", a: "The Sun." },
+  { q: "What do we call animals that only eat plants?", a: "Herbivores." },
+  { q: "What is the freezing point of water?", a: "0°C (32°F)." },
+  { q: "Which gas makes up most of the Earth's atmosphere?", a: "Nitrogen (about 78%)." },
+  { q: "What type of simple machine is a see-saw?", a: "A lever." },
+  { q: "What is the process of a caterpillar turning into a butterfly called?", a: "Metamorphosis." },
+  { q: "What is the speed of light approximately?", a: "300,000 km/s (kilometres per second)." },
+  { q: "Where does a plant store food?", a: "In its leaves, roots, fruits, or seeds, depending on the plant." },
+  { q: "What is the full form of DNA?", a: "Deoxyribonucleic Acid." },
+  { q: "What organ do fish use to breathe underwater?", a: "Gills." },
+  { q: "What is the outer layer of the Earth called?", a: "The crust." },
+  { q: "Which colour of the rainbow has the longest wavelength?", a: "Red." },
+  { q: "What do you call a baby frog?", a: "A tadpole." },
+  { q: "What is the unit of measuring temperature?", a: "Degree Celsius (°C) or Degree Fahrenheit (°F)." },
+  { q: "Which planet has rings around it?", a: "Saturn (though Jupiter, Uranus, and Neptune also have rings, Saturn's are most famous)." },
+  { q: "What is the green pigment in plants called?", a: "Chlorophyll." },
+  { q: "What type of energy does the Sun provide?", a: "Solar energy (light energy and heat energy)." },
+  { q: "What do we call the path Earth takes around the Sun?", a: "Orbit." },
+  { q: "What is the liquid part of blood called?", a: "Plasma." },
+  { q: "Which animal is known as the ship of the desert?", a: "The camel." },
+  { q: "What is sound energy?", a: "Energy produced by vibrations that travel through air, water, or solids as waves." },
+  { q: "What is a food chain?", a: "A sequence showing how energy passes from one organism to another through eating." },
+  { q: "What is the process by which a solid turns directly into a gas called?", a: "Sublimation." },
+  { q: "Why does the Moon shine at night?", a: "The Moon reflects sunlight; it does not produce its own light." },
+  { q: "What is the unit of electric current?", a: "Ampere (A)." },
+  { q: "Which part of the flower produces pollen?", a: "The anther (part of the stamen)." },
+  { q: "What is the name of the force that opposes motion?", a: "Friction." },
+  { q: "How many chambers does the human heart have?", a: "Four chambers: two atria and two ventricles." },
+  { q: "What is the layer of gases surrounding Earth called?", a: "The atmosphere." },
+];
+
+// ===== SENIOR QUESTIONS (Classes 6-8) — 45 questions, pick 15 per day =====
+const SENIOR_QUESTIONS = [
+  { q: "What is Newton's Second Law of Motion?", a: "Force = Mass × Acceleration (F = ma). The acceleration of an object depends on the net force and its mass." },
+  { q: "What is the chemical formula of water?", a: "H₂O — two hydrogen atoms bonded to one oxygen atom." },
+  { q: "What is photosynthesis and where does it occur in a plant cell?", a: "Photosynthesis is the process of making food using sunlight, CO₂, and water. It occurs in chloroplasts." },
+  { q: "Explain the difference between a physical change and a chemical change.", a: "A physical change alters form but not composition (e.g. melting ice). A chemical change produces new substances (e.g. burning wood)." },
+  { q: "What is the difference between a conductor and an insulator?", a: "Conductors allow electricity/heat to flow freely (e.g. copper). Insulators resist flow (e.g. rubber, wood)." },
+  { q: "What is the pH scale and what does a pH of 7 indicate?", a: "The pH scale (0–14) measures acidity/alkalinity. pH 7 is neutral (pure water). Below 7 is acidic; above 7 is basic." },
+  { q: "What is the role of the mitochondria in a cell?", a: "Mitochondria are the powerhouse of the cell — they produce energy (ATP) through cellular respiration." },
+  { q: "What is the law of conservation of energy?", a: "Energy can neither be created nor destroyed; it can only be converted from one form to another." },
+  { q: "What is the difference between a mixture and a compound?", a: "A mixture is a physical combination of substances that can be separated. A compound is chemically bonded and has new properties." },
+  { q: "Describe the water cycle with its four main stages.", a: "Evaporation → Condensation (cloud formation) → Precipitation (rain/snow) → Collection (rivers, oceans). Transpiration also contributes." },
+  { q: "What is refraction of light?", a: "Refraction is the bending of light when it passes from one medium to another of different optical density, e.g. from air to glass." },
+  { q: "What are the differences between arteries and veins?", a: "Arteries carry oxygenated blood away from the heart; they have thick walls. Veins carry deoxygenated blood to the heart; they have valves." },
+  { q: "What is the periodic table and who created it?", a: "The periodic table organises elements by atomic number and properties. It was created by Dmitri Mendeleev in 1869." },
+  { q: "What is osmosis?", a: "Osmosis is the movement of water molecules from a region of low solute concentration to high solute concentration through a semi-permeable membrane." },
+  { q: "Explain the greenhouse effect.", a: "Greenhouse gases (CO₂, methane) trap heat from the Sun in Earth's atmosphere, warming the planet. Human activities have intensified this effect." },
+  { q: "What is the difference between sexual and asexual reproduction?", a: "Sexual reproduction involves two parents and mixing of genetic material. Asexual reproduction involves one parent and produces genetically identical offspring." },
+  { q: "What is Ohm's Law?", a: "V = IR. Voltage (V) equals Current (I) multiplied by Resistance (R)." },
+  { q: "What are the three states of matter and their particle arrangement?", a: "Solid: tightly packed, fixed position. Liquid: loosely packed, can flow. Gas: widely spaced, move freely." },
+  { q: "What is the function of the digestive enzyme amylase?", a: "Amylase is produced in the salivary glands and pancreas; it breaks down starch into simpler sugars (maltose)." },
+  { q: "What is the difference between renewable and non-renewable energy sources?", a: "Renewable sources (solar, wind, hydro) replenish naturally. Non-renewable sources (coal, oil, gas) are finite and take millions of years to form." },
+  { q: "What is an ecosystem?", a: "An ecosystem is a community of living organisms (biotic) interacting with each other and their non-living environment (abiotic factors) as a system." },
+  { q: "What is the formula for calculating speed?", a: "Speed = Distance ÷ Time. The SI unit is metres per second (m/s)." },
+  { q: "What is a cell membrane and what is its function?", a: "The cell membrane is a thin, flexible barrier surrounding the cell. It controls what enters and exits the cell (selective permeability)." },
+  { q: "Explain the difference between reflection and refraction.", a: "Reflection is the bouncing of light off a surface. Refraction is the bending of light when it changes medium/density." },
+  { q: "What are isotopes?", a: "Isotopes are atoms of the same element that have the same number of protons but different numbers of neutrons (e.g. Carbon-12 and Carbon-14)." },
+  { q: "What is biodiversity and why is it important?", a: "Biodiversity is the variety of life on Earth. It is important for ecosystem stability, medicine, food security, and climate regulation." },
+  { q: "What is the process of rusting and what is it called chemically?", a: "Rusting is the oxidation of iron in the presence of water and oxygen, forming iron oxide (Fe₂O₃). It is a chemical change." },
+  { q: "What is the difference between mass and weight?", a: "Mass is the amount of matter in an object (kg); it is constant. Weight is the force of gravity on that mass (N); it varies by location." },
+  { q: "What are the main functions of the human skeleton?", a: "Protection of organs, support and structure, movement (with muscles), blood cell production (bone marrow), and mineral storage." },
+  { q: "What is an atom and what are its three sub-atomic particles?", a: "An atom is the smallest unit of an element. Sub-atomic particles: Proton (positive), Neutron (neutral) in nucleus; Electron (negative) orbiting it." },
+  { q: "What is the difference between aerobic and anaerobic respiration?", a: "Aerobic respiration uses oxygen to release energy: C₆H₁₂O₆ + O₂ → CO₂ + H₂O + energy. Anaerobic occurs without oxygen, producing lactic acid or ethanol." },
+  { q: "What are tectonic plates and how do they cause earthquakes?", a: "Tectonic plates are large sections of Earth's crust that move slowly. When plates collide, separate, or slide past each other, stress builds up causing earthquakes." },
+  { q: "What is the difference between a virus and a bacteria?", a: "Bacteria are single-celled living organisms that can reproduce independently. Viruses are non-living particles that need a host cell to replicate." },
+  { q: "What is Archimedes' Principle?", a: "A body immersed in a fluid experiences an upward buoyant force equal to the weight of the fluid it displaces." },
+  { q: "What is the electromagnetic spectrum?", a: "The electromagnetic spectrum is the range of all electromagnetic radiation, from radio waves (long wavelength) to gamma rays (short wavelength), including visible light." },
+  { q: "What is natural selection?", a: "Natural selection is the process where organisms with favourable traits are more likely to survive and reproduce, passing those traits to offspring (Darwin's theory of evolution)." },
+  { q: "What is the difference between a physical and chemical property?", a: "A physical property can be observed without changing composition (colour, density). A chemical property describes how a substance reacts or transforms (flammability, reactivity)." },
+  { q: "What is a food web?", a: "A food web is a complex network of interconnected food chains showing feeding relationships among organisms in an ecosystem." },
+  { q: "What are the components of blood?", a: "Blood consists of red blood cells (carry oxygen), white blood cells (fight infection), platelets (clotting), and plasma (liquid component)." },
+  { q: "Explain the nitrogen cycle briefly.", a: "Nitrogen moves from atmosphere → soil (via nitrogen-fixing bacteria) → plants → animals → decomposers → back to atmosphere. It is essential for protein formation." },
+  { q: "What is the difference between convex and concave lenses?", a: "A convex lens is thicker in the middle and converges light rays. A concave lens is thinner in the middle and diverges light rays." },
+  { q: "What is an alloy? Give two examples.", a: "An alloy is a mixture of two or more metals (or metal + non-metal). Examples: Brass (copper + zinc), Steel (iron + carbon)." },
+  { q: "What is the difference between a herbivore, carnivore, and omnivore?", a: "Herbivores eat only plants. Carnivores eat only animals. Omnivores eat both plants and animals." },
+  { q: "What is potential energy and kinetic energy?", a: "Potential energy is stored energy based on position (e.g. a raised object). Kinetic energy is energy due to motion (KE = ½mv²)." },
+  { q: "What is the function of the kidney in the human body?", a: "The kidneys filter blood, removing waste products and excess water to form urine. They also regulate blood pressure and electrolyte balance." },
+];
+
+// ===== ADVANCED QUESTIONS (Classes 9-10) — 45 questions, pick 15 per day =====
+const ADVANCED_QUESTIONS = [
+  { q: "State and explain Faraday's Law of Electromagnetic Induction.", a: "Faraday's Law states that the EMF induced in a conductor is proportional to the rate of change of magnetic flux through it. EMF = –dΦ/dt." },
+  { q: "What is the difference between covalent and ionic bonds? Give an example of each.", a: "Ionic bonds involve electron transfer (e.g. NaCl). Covalent bonds involve electron sharing (e.g. H₂O). Ionic compounds have higher melting points and conduct electricity when dissolved." },
+  { q: "Explain the concept of DNA replication and the enzymes involved.", a: "DNA replication is semi-conservative: each strand acts as a template. Key enzymes: Helicase (unwinds), DNA Polymerase (adds nucleotides), Ligase (joins fragments)." },
+  { q: "What is the difference between series and parallel circuits? How does resistance behave in each?", a: "Series: resistances add (R_total = R1 + R2...). Parallel: reciprocals add (1/R = 1/R1 + 1/R2...). Parallel circuits have lower total resistance." },
+  { q: "Explain Newton's Law of Universal Gravitation.", a: "Every mass attracts every other mass with a force F = Gm₁m₂/r². G is the gravitational constant (6.674×10⁻¹¹ N·m²/kg²). Force decreases with the square of distance." },
+  { q: "What is the difference between endothermic and exothermic reactions? Give examples.", a: "Exothermic reactions release heat (e.g. combustion, respiration). Endothermic reactions absorb heat (e.g. photosynthesis, dissolving ammonium nitrate). Enthalpy change: negative for exothermic." },
+  { q: "Describe the structure of a neuron and how nerve impulses are transmitted.", a: "Neurons have dendrites (receive signals), a cell body, and an axon (transmit signals). Impulses travel as electrical signals (action potentials) via sodium/potassium ion channels. Synapses use neurotransmitters." },
+  { q: "What is the Doppler effect and where is it applied?", a: "The Doppler effect is the change in observed frequency of waves when source or observer moves. Applications: radar speed guns, medical ultrasound, astronomy (redshift/blueshift)." },
+  { q: "What is the difference between mitosis and meiosis?", a: "Mitosis: cell division producing 2 identical diploid cells (for growth/repair). Meiosis: produces 4 haploid cells with genetic variation (for sexual reproduction). Meiosis involves two divisions and crossing over." },
+  { q: "Explain the concept of pH and the role of buffers in biological systems.", a: "pH = –log[H⁺]. Buffers resist pH change by absorbing excess H⁺ or OH⁻. Blood is buffered at pH 7.4 by the bicarbonate system (H₂CO₃ ⇌ H⁺ + HCO₃⁻)." },
+  { q: "What is the photoelectric effect and what does it prove?", a: "The photoelectric effect is the emission of electrons from a metal surface when light of sufficient frequency hits it. Einstein explained it proves light consists of photons (quanta) with energy E = hf." },
+  { q: "Describe the carbon cycle and its importance.", a: "Carbon moves: atmosphere (CO₂) → plants (photosynthesis) → animals (eating) → decomposers → back to atmosphere (respiration, decomposition, combustion). Important for climate regulation and life." },
+  { q: "What are isotopes? Explain with reference to Carbon-14 dating.", a: "Isotopes have the same atomic number but different mass numbers. C-14 is radioactive and decays at a known rate (half-life ~5,730 years), so the ratio of C-14 to C-12 in fossils indicates age." },
+  { q: "Explain the difference between speed and velocity, and distance and displacement.", a: "Speed is scalar (magnitude only); velocity is vector (magnitude + direction). Distance is total path length; displacement is shortest path from start to finish. Both pairs relate to motion." },
+  { q: "What is the Bohr model of the atom? What were its limitations?", a: "Bohr proposed electrons orbit in fixed circular shells with quantized energy levels. Limitations: only accurate for hydrogen; couldn't explain spectra of multi-electron atoms or electron wave nature." },
+  { q: "What is CRISPR-Cas9 and what is its significance in science?", a: "CRISPR-Cas9 is a gene-editing tool based on a bacterial immune system. The Cas9 enzyme cuts DNA at a target sequence guided by RNA. It allows precise editing of genes for medicine and agriculture." },
+  { q: "Explain the principle of conservation of momentum.", a: "Total momentum of a closed system remains constant if no external forces act. p = mv. In a collision, Σp_before = Σp_after. This applies to rockets, collisions, and explosions." },
+  { q: "What is enzyme specificity and how does the lock-and-key model explain it?", a: "Enzymes are specific to their substrates due to the shape of their active site. The lock-and-key model says only the correct substrate (key) fits the enzyme's active site (lock), enabling catalysis." },
+  { q: "What is nuclear fission and how does it differ from nuclear fusion?", a: "Fission: heavy nucleus splits into smaller ones releasing energy (e.g. U-235 in reactors). Fusion: light nuclei combine to form heavier ones releasing more energy (e.g. Sun). Fusion requires extreme temperature/pressure." },
+  { q: "Describe the structure and function of DNA.", a: "DNA is a double helix of two strands held by hydrogen bonds between complementary base pairs (A-T, G-C). It stores genetic information in codons of 3 bases, directing protein synthesis via mRNA." },
+  { q: "What is the greenhouse effect and how does it differ from global warming?", a: "The greenhouse effect is the natural trapping of heat by atmospheric gases, making Earth habitable. Global warming is the enhanced greenhouse effect caused by human emissions of CO₂, methane, etc., raising global temperatures." },
+  { q: "Explain the difference between alpha, beta, and gamma radiation.", a: "Alpha (α): helium nucleus, low penetration, stopped by paper. Beta (β): fast electron, medium penetration, stopped by aluminium. Gamma (γ): electromagnetic radiation, high penetration, needs lead/concrete to stop." },
+  { q: "What is electrolysis? Describe what happens at each electrode.", a: "Electrolysis is the decomposition of a substance using electricity. At the cathode (–): positive ions gain electrons (reduction). At the anode (+): negative ions lose electrons (oxidation)." },
+  { q: "What is the endocrine system? Give three examples of hormones and their functions.", a: "The endocrine system is a network of glands producing hormones. Insulin (pancreas): regulates blood glucose. Adrenaline (adrenal glands): prepares body for fight/flight. Thyroxine (thyroid): controls metabolic rate." },
+  { q: "Explain the concept of wave-particle duality.", a: "Wave-particle duality states that matter and light exhibit properties of both waves and particles depending on the experiment. The double-slit experiment shows light acts as a wave; the photoelectric effect shows it acts as particles (photons)." },
+  { q: "What is the difference between transcription and translation in protein synthesis?", a: "Transcription: DNA → mRNA in the nucleus. Translation: mRNA → protein at ribosomes, where tRNA matches codons to amino acids. Together these are the central dogma of molecular biology." },
+  { q: "What is Bernoulli's principle and how does it apply to flight?", a: "Bernoulli's principle states that faster-moving fluids exert less pressure. Aeroplane wings (aerofoils) are shaped so air moves faster over the top, creating lower pressure above and generating lift." },
+  { q: "Describe the process of natural selection and give an example.", a: "Natural selection: organisms with favourable genetic traits survive and reproduce more. Example: Peppered moths — dark moths survived industrial pollution (camouflage) while lighter moths were eaten more by predators." },
+  { q: "What is activation energy and how do catalysts affect it?", a: "Activation energy is the minimum energy needed for a chemical reaction to occur. Catalysts lower the activation energy by providing an alternative reaction pathway, increasing reaction rate without being consumed." },
+  { q: "Explain the structure and function of the cell wall in plant cells.", a: "The cell wall is a rigid layer outside the cell membrane, made of cellulose. It provides structural support, prevents over-expansion during osmosis, and maintains cell shape. Absent in animal cells." },
+  { q: "What is the difference between transverse and longitudinal waves? Give examples.", a: "Transverse waves: vibration perpendicular to direction of travel (e.g. light, water waves). Longitudinal waves: vibration parallel to direction of travel (e.g. sound). Sound cannot travel in a vacuum; light can." },
+  { q: "What are stem cells and why are they important in medicine?", a: "Stem cells are undifferentiated cells that can develop into specialised cell types. Embryonic stem cells are pluripotent. They are important for treating diseases like Parkinson's, diabetes, and for organ regeneration." },
+  { q: "Explain the concept of redox reactions (oxidation and reduction).", a: "Oxidation is loss of electrons (OIL); reduction is gain of electrons (RIG) — OIL RIG. In a redox reaction, the oxidising agent gains electrons and is reduced; the reducing agent loses electrons and is oxidised." },
+  { q: "What is the difference between a conductor, semiconductor, and insulator?", a: "Conductors (e.g. copper) have free electrons and low resistance. Insulators (e.g. rubber) have no free electrons. Semiconductors (e.g. silicon) have intermediate conductivity, altered by temperature or impurities (doping)." },
+  { q: "Describe the mechanism of antibody production and immunological memory.", a: "When a pathogen is detected, B-lymphocytes produce specific antibodies. After the infection, memory B-cells remain. On re-exposure, the immune response is faster and stronger — the basis of vaccination." },
+  { q: "What is entropy and the Second Law of Thermodynamics?", a: "Entropy is a measure of disorder in a system. The Second Law states that the total entropy of an isolated system always increases over time. Energy conversions are never 100% efficient — some energy is lost as heat." },
+  { q: "Explain the process of electrolytic purification of copper.", a: "Impure copper is the anode; pure copper is the cathode; copper sulfate solution is the electrolyte. Copper dissolves from the anode and pure copper deposits on the cathode. Impurities fall as anode sludge." },
+  { q: "What is genetic variation and how does meiosis contribute to it?", a: "Genetic variation is differences in DNA between individuals. Meiosis contributes through: (1) crossing over (exchange of DNA segments during prophase I) and (2) independent assortment of chromosomes into gametes." },
+  { q: "What is the difference between accuracy and precision in scientific measurements?", a: "Accuracy refers to how close a measurement is to the true value. Precision refers to how reproducible measurements are. A measurement can be precise but not accurate (systematic error) or accurate but not precise (random error)." },
+  { q: "Explain the Hardy-Weinberg principle in population genetics.", a: "The Hardy-Weinberg principle states that allele frequencies in a population remain constant if no evolution occurs. Conditions: no mutation, random mating, no migration, no genetic drift, no natural selection." },
+  { q: "What are monoclonal antibodies and what are their applications?", a: "Monoclonal antibodies are identical antibodies produced from a single B-cell clone. Applications: pregnancy tests, cancer treatment (targeted therapy), COVID-19 tests, and autoimmune disease treatment." },
+  { q: "What is the significance of the mole concept in chemistry?", a: "A mole contains 6.022×10²³ particles (Avogadro's number). It allows chemists to count atoms/molecules by weighing. Molar mass equals the atomic/molecular mass in grams. Used to calculate stoichiometry in reactions." },
+  { q: "Describe the structure of the Earth's interior and its layers.", a: "Inner core: solid iron-nickel (~5,100–6,371 km). Outer core: liquid iron-nickel, generates magnetic field. Mantle: semi-solid silicate rock, convection drives plate tectonics. Crust: thin outer shell (5–70 km)." },
+  { q: "What is genetic engineering and how is recombinant DNA technology used?", a: "Genetic engineering involves modifying an organism's DNA. Recombinant DNA: a gene is cut using restriction enzymes, inserted into a vector (e.g. plasmid), and introduced into a host cell (e.g. bacteria to produce insulin)." },
+  { q: "Explain the concept of half-life in radioactive decay.", a: "Half-life is the time taken for half the radioactive nuclei in a sample to decay. It is constant for each isotope, unaffected by temperature or pressure. Used in carbon dating, nuclear medicine, and waste management." },
+];
+
+// ========== TIMER SETTINGS PER CATEGORY (seconds per question) ==========
+// Based on cognitive load appropriate for each standard's IQ range:
+// Junior (3–5): 45 sec — concrete operational stage, more time needed
+// Senior (6–8): 35 sec — formal operational beginning, moderate time
+// Advanced (9–10): 25 sec — formal operational, higher challenge
+const CATEGORY_TIMERS = {
+  junior: 45,
+  senior: 35,
+  advanced: 25
+};
+
+// ========== UTILITY FUNCTIONS ==========
+function getDayIndex() {
+  const today = new Date();
+  return Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+}
+
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+
+function shuffleArray(arr, rng) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getDailyQuestions(pool, dayIndex, deviceSeed) {
+  const dayRng = seededRandom(dayIndex * 7919);
+  const shuffledByDay = shuffleArray(pool, dayRng);
+  const dailySet = shuffledByDay.slice(0, 15);
+  const deviceRng = seededRandom(deviceSeed + dayIndex);
+  return shuffleArray(dailySet, deviceRng);
+}
+
+function getDeviceSeed() {
+  let seed = localStorage.getItem('device_seed');
+  if (!seed) {
+    seed = Math.floor(Math.random() * 1000000).toString();
+    localStorage.setItem('device_seed', seed);
+  }
+  return parseInt(seed);
+}
+
+function setDailyQuote() {
+  const dayIndex = getDayIndex();
+  const q = SCIENCE_QUOTES[dayIndex % SCIENCE_QUOTES.length];
+  document.getElementById('daily-quote').textContent = q.text;
+  document.getElementById('quote-author').textContent = '— ' + q.author;
+}
+
+// ========== STATE ==========
+let currentCategory = null;
+let currentQuestions = [];
+let studentName = '';
+let studentStd = '';
+let markedAnswers = {};
+let questionTimers = {};      // per-question timer intervals
+let questionTimeLeft = {};    // per-question seconds remaining
+let selectedOptions = {};     // track which option index was selected per question
+
+// ========== MODAL ==========
+function openModal(category) {
+  currentCategory = category;
+  const modal = document.getElementById('student-modal');
+  const title = document.getElementById('modal-title');
+  const stdSelect = document.getElementById('student-std');
+  const btn = document.getElementById('start-quiz-btn');
+
+  stdSelect.innerHTML = '<option value="">— Select Standard —</option>';
+
+  if (category === 'junior') {
+    title.textContent = '🌱 Junior Science Quiz';
+    btn.className = 'modal-btn primary';
+    [3, 4, 5].forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = 'Class ' + n;
+      opt.textContent = 'Class ' + n;
+      stdSelect.appendChild(opt);
+    });
+  } else if (category === 'senior') {
+    title.textContent = '🔬 Senior Science Quiz';
+    btn.className = 'modal-btn senior-btn';
+    [6, 7, 8].forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = 'Class ' + n;
+      opt.textContent = 'Class ' + n;
+      stdSelect.appendChild(opt);
+    });
+  } else {
+    title.textContent = '🚀 Advanced Science Quiz';
+    btn.className = 'modal-btn advanced-btn';
+    [9, 10].forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = 'Class ' + n;
+      opt.textContent = 'Class ' + n;
+      stdSelect.appendChild(opt);
+    });
+  }
+
+  document.getElementById('student-name').value = '';
+  modal.classList.add('active');
+}
+
+function startQuiz() {
+  const name = document.getElementById('student-name').value.trim();
+  const std = document.getElementById('student-std').value;
+  if (!name) { alert('Please enter your name!'); return; }
+  if (!std) { alert('Please select your standard!'); return; }
+
+  studentName = name;
+  studentStd = std;
+  document.getElementById('student-modal').classList.remove('active');
+
+  const dayIndex = getDayIndex();
+  const deviceSeed = getDeviceSeed();
+  let pool;
+  if (currentCategory === 'junior') pool = JUNIOR_QUESTIONS;
+  else if (currentCategory === 'senior') pool = SENIOR_QUESTIONS;
+  else pool = ADVANCED_QUESTIONS;
+
+  currentQuestions = getDailyQuestions(pool, dayIndex, deviceSeed);
+  markedAnswers = {};
+  selectedOptions = {};
+  questionTimers = {};
+  questionTimeLeft = {};
+
+  renderQuiz();
+}
+
+// ========== MCQ OPTION GENERATION ==========
+function getShortAnswer(fullAnswer) {
+  let s = fullAnswer.split(/[.!?]/)[0].trim();
+  if (s.length > 70) s = s.substring(0, 68) + '…';
+  return s;
+}
+
+function generateOptions(correctIndex, pool, rng) {
+  const correct = pool[correctIndex];
+  const correctShort = getShortAnswer(correct.a);
+
+  const wrongIndices = [];
+  const usedIdx = new Set([correctIndex]);
+  let attempts = 0;
+  while (wrongIndices.length < 3 && attempts < 200) {
+    const idx = Math.floor(rng() * pool.length);
+    if (!usedIdx.has(idx)) {
+      const wrongShort = getShortAnswer(pool[idx].a);
+      if (wrongShort !== correctShort) {
+        usedIdx.add(idx);
+        wrongIndices.push(wrongShort);
+      }
+    }
+    attempts++;
+  }
+
+  const options = [{ text: correctShort, correct: true }, ...wrongIndices.map(t => ({ text: t, correct: false }))];
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+  return options;
+}
+
+// ========== RENDER QUIZ ==========
+function renderQuiz() {
+  document.getElementById('home-page').style.display = 'none';
+  document.getElementById('quiz-page').style.display = 'block';
+  document.getElementById('marksheet-page').style.display = 'none';
+
+  const isJunior = currentCategory === 'junior';
+  const isAdvanced = currentCategory === 'advanced';
+
+  if (isJunior) {
+    document.getElementById('quiz-cat-label').textContent = '🌱 Classes 3–5 Quiz';
+  } else if (isAdvanced) {
+    document.getElementById('quiz-cat-label').textContent = '🚀 Classes 9–10 Quiz';
+  } else {
+    document.getElementById('quiz-cat-label').textContent = '🔬 Classes 6–8 Quiz';
+  }
+  document.getElementById('quiz-student-info').textContent = studentName + ' · ' + studentStd;
+
+  let pool;
+  if (isJunior) pool = JUNIOR_QUESTIONS;
+  else if (isAdvanced) pool = ADVANCED_QUESTIONS;
+  else pool = SENIOR_QUESTIONS;
+
+  const optRng = seededRandom(getDeviceSeed() + getDayIndex() + 42);
+  const LETTERS = ['A', 'B', 'C', 'D'];
+  const timePerQ = CATEGORY_TIMERS[currentCategory];
+
+  const list = document.getElementById('questions-list');
+  list.innerHTML = '';
+
+  window._quizOptionsData = [];
+
+  currentQuestions.forEach((q, i) => {
+    const poolIdx = pool.indexOf(q);
+    const options = generateOptions(poolIdx >= 0 ? poolIdx : i, pool, optRng);
+    window._quizOptionsData.push(options);
+
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'q-card-' + i;
+
+    const qNumClass = isJunior ? '' : isAdvanced ? 'advanced-q' : 'senior-q';
+
+    const optionsHTML = options.map((opt, oi) => `
+      <button class="option-btn" id="opt-${i}-${oi}" onclick="selectOption(${i}, ${oi})">
+        <span class="opt-letter">${LETTERS[oi]}</span>
+        <span>${opt.text}</span>
+      </button>
+    `).join('');
+
+    const showBtnClass = isJunior ? '' : isAdvanced ? 'advanced-enabled' : 'senior-enabled';
+
+    const isLocked = i > 0;
+
+    card.innerHTML = `
+      <div class="q-num ${qNumClass}">Question ${i + 1} <span style="font-weight:400;opacity:0.5">of 15</span></div>
+      ${isLocked ? '<div class="locked-badge" id="locked-badge-' + i + '">🔒 Waiting for previous question...</div>' : ''}
+      <div class="q-timer">
+        <div class="q-timer-bar-bg"><div class="q-timer-bar-fill" id="qt-fill-${i}" style="width:100%"></div></div>
+        <div class="q-timer-num" id="qt-num-${i}">${timePerQ}s</div>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options" id="opts-${i}">${optionsHTML}</div>
+      <button class="show-answer-btn" id="show-ans-btn-${i}" disabled onclick="showAnswerForQuestion(${i})">
+        💡 Show Answer
+      </button>
+      <div class="q-feedback" id="fb-${i}"></div>
+    `;
+
+    if (isLocked) card.classList.add('locked');
+    list.appendChild(card);
+  });
+
+  // Only start timer for the first question; rest unlock sequentially
+  startQuestionTimer(0, timePerQ);
+
+  updateProgress();
+  document.getElementById('quiz-page').scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+// ========== PER-QUESTION TIMER ==========
+function startQuestionTimer(qIdx, seconds) {
+  questionTimeLeft[qIdx] = seconds;
+  updateQuestionTimerUI(qIdx, seconds, seconds);
+
+  questionTimers[qIdx] = setInterval(() => {
+    questionTimeLeft[qIdx]--;
+    updateQuestionTimerUI(qIdx, questionTimeLeft[qIdx], seconds);
+
+    if (questionTimeLeft[qIdx] <= 0) {
+      clearInterval(questionTimers[qIdx]);
+      if (markedAnswers[qIdx] === undefined) {
+        timeExpireQuestion(qIdx);
+      }
+    }
+  }, 1000);
+}
+
+function updateQuestionTimerUI(qIdx, left, max) {
+  const fill = document.getElementById('qt-fill-' + qIdx);
+  const num = document.getElementById('qt-num-' + qIdx);
+  if (!fill || !num) return;
+
+  const pct = Math.max(0, (left / max) * 100);
+  fill.style.width = pct + '%';
+  num.textContent = left > 0 ? left + 's' : '0s';
+
+  const isWarn = left <= Math.floor(max * 0.4) && left > Math.floor(max * 0.15);
+  const isDanger = left <= Math.floor(max * 0.15);
+
+  fill.className = 'q-timer-bar-fill' + (isDanger ? ' danger' : isWarn ? ' warn' : '');
+  num.className = 'q-timer-num' + (isDanger ? ' danger' : isWarn ? ' warn' : '');
+}
+
+function timeExpireQuestion(qIdx) {
+  markedAnswers[qIdx] = 'timeout';
+  updateProgress();
+
+  const card = document.getElementById('q-card-' + qIdx);
+  if (card) card.classList.add('time-expired');
+
+  const allOpts = document.querySelectorAll(`[id^="opt-${qIdx}-"]`);
+  allOpts.forEach(btn => { btn.disabled = true; });
+
+  const fb = document.getElementById('fb-' + qIdx);
+  if (fb) {
+    const correctShort = getShortAnswer(currentQuestions[qIdx].a);
+    fb.className = 'q-feedback fb-timeout show';
+    fb.innerHTML = `⏰ Time's up! <div class="fb-answer">✔ Answer: ${correctShort}</div>`;
+  }
+
+  // Show answer button becomes redundant — hide it
+  const sab = document.getElementById('show-ans-btn-' + qIdx);
+  if (sab) sab.style.display = 'none';
+
+  // Unlock the next question
+  unlockNextQuestion(qIdx);
+}
+
+function stopAllTimers() {
+  Object.values(questionTimers).forEach(t => clearInterval(t));
+}
+
+function unlockNextQuestion(currentIdx) {
+  const nextIdx = currentIdx + 1;
+  if (nextIdx >= currentQuestions.length) return;
+
+  const nextCard = document.getElementById('q-card-' + nextIdx);
+  if (!nextCard) return;
+
+  // Remove locked state
+  nextCard.classList.remove('locked');
+  const badge = document.getElementById('locked-badge-' + nextIdx);
+  if (badge) badge.remove();
+
+  // Start its timer
+  const timePerQ = CATEGORY_TIMERS[currentCategory];
+  startQuestionTimer(nextIdx, timePerQ);
+
+  // Smooth scroll to it after a short delay
+  setTimeout(() => {
+    nextCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 300);
+}
+
+// ========== SELECT OPTION ==========
+function selectOption(qIdx, optIdx) {
+  // If already confirmed (answered/timed out) — don't allow
+  if (markedAnswers[qIdx] !== undefined) return;
+
+  // Clear previous selection highlight (allow changing before Show Answer is pressed)
+  if (selectedOptions[qIdx] !== undefined && selectedOptions[qIdx] !== optIdx) {
+    const prevBtn = document.getElementById(`opt-${qIdx}-${selectedOptions[qIdx]}`);
+    if (prevBtn) prevBtn.classList.remove('selected');
+  }
+
+  selectedOptions[qIdx] = optIdx;
+
+  // Highlight selected
+  const allOpts = document.querySelectorAll(`[id^="opt-${qIdx}-"]`);
+  allOpts.forEach((btn, bi) => {
+    btn.classList.toggle('selected', bi === optIdx);
+  });
+
+  // Enable Show Answer button
+  const sab = document.getElementById('show-ans-btn-' + qIdx);
+  if (sab) {
+    const cls = currentCategory === 'advanced' ? 'advanced-enabled' : currentCategory === 'senior' ? 'senior-enabled' : 'enabled';
+    sab.className = `show-answer-btn ${cls}`;
+    sab.disabled = false;
+  }
+}
+
+// ========== SHOW ANSWER (confirms selection) ==========
+function showAnswerForQuestion(qIdx) {
+  if (markedAnswers[qIdx] !== undefined) return;
+  if (selectedOptions[qIdx] === undefined) return;
+
+  const optIdx = selectedOptions[qIdx];
+  const options = window._quizOptionsData[qIdx];
+  const isCorrect = options[optIdx].correct;
+
+  // Stop this question's timer
+  clearInterval(questionTimers[qIdx]);
+
+  markedAnswers[qIdx] = isCorrect ? 'correct' : 'wrong';
+  updateProgress();
+
+  const card = document.getElementById('q-card-' + qIdx);
+  const fb = document.getElementById('fb-' + qIdx);
+  const LETTERS = ['A', 'B', 'C', 'D'];
+
+  const allOpts = document.querySelectorAll(`[id^="opt-${qIdx}-"]`);
+  allOpts.forEach(btn => { btn.disabled = true; btn.classList.remove('selected'); });
+
+  const selectedBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
+
+  if (isCorrect) {
+    selectedBtn.classList.add('correct-ans');
+    card.classList.add('answered-correct');
+    fb.className = 'q-feedback fb-correct show';
+    fb.innerHTML = '✅ Correct! Well done!';
+  } else {
+    selectedBtn.classList.add('wrong-ans');
+    card.classList.add('answered-wrong');
+    // Highlight the correct option
+    allOpts.forEach((btn, bi) => {
+      if (options[bi] && options[bi].correct) btn.classList.add('correct-ans');
+    });
+    const correctAns = getShortAnswer(currentQuestions[qIdx].a);
+    fb.className = 'q-feedback fb-wrong show';
+    fb.innerHTML = `❌ Not quite! <div class="fb-answer">✔ Answer: ${correctAns}</div>`;
+  }
+
+  // Hide show answer button after use
+  const sab = document.getElementById('show-ans-btn-' + qIdx);
+  if (sab) sab.style.display = 'none';
+
+  // Unlock the next question
+  unlockNextQuestion(qIdx);
+}
+
+function updateProgress() {
+  const answered = Object.keys(markedAnswers).length;
+  document.getElementById('progress-fill').style.width = (answered / 15 * 100) + '%';
+  document.getElementById('progress-text').textContent = answered + ' / 15 answered';
+}
+
+// ========== SUBMIT ==========
+function submitQuiz() {
+  const answered = Object.keys(markedAnswers).length;
+  if (answered < 15) {
+    const remaining = 15 - answered;
+    if (!confirm(`You have ${remaining} question(s) not answered yet.\nSubmit anyway?`)) return;
+  }
+  stopAllTimers();
+  showMarksheet();
+}
+
+function showMarksheet() {
+  stopAllTimers();
+  let score = 0;
+  for (const key in markedAnswers) {
+    if (markedAnswers[key] === 'correct') score++;
+  }
+  const percent = Math.round((score / 15) * 100);
+
+  document.getElementById('home-page').style.display = 'none';
+  document.getElementById('quiz-page').style.display = 'none';
+  document.getElementById('marksheet-page').style.display = 'block';
+
+  document.getElementById('ms-correct').textContent = score + ' / 15';
+  const wrongCount = Object.values(markedAnswers).filter(v => v === 'wrong').length;
+  const timeoutCount = Object.values(markedAnswers).filter(v => v === 'timeout').length;
+  document.getElementById('ms-wrong').textContent = wrongCount + ' / 15' + (timeoutCount > 0 ? ` (${timeoutCount} timed out)` : '');
+  document.getElementById('ms-name').textContent = studentName;
+  document.getElementById('ms-std').textContent = studentStd;
+
+  let catLabel = 'Classes 3–5 (Junior)';
+  if (currentCategory === 'senior') catLabel = 'Classes 6–8 (Senior)';
+  else if (currentCategory === 'advanced') catLabel = 'Classes 9–10 (Advanced)';
+  document.getElementById('ms-cat').textContent = catLabel;
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('ms-date').textContent = dateStr;
+
+  const scoreEl = document.getElementById('ms-score-num');
+  scoreEl.textContent = score;
+
+  if (percent >= 90) {
+    scoreEl.style.color = '#e3b341';
+    document.getElementById('ms-trophy').textContent = '🏆';
+  } else if (percent >= 70) {
+    scoreEl.style.color = '#3fb950';
+    document.getElementById('ms-trophy').textContent = '🥈';
+  } else if (percent >= 50) {
+    scoreEl.style.color = '#58a6ff';
+    document.getElementById('ms-trophy').textContent = '🎓';
+  } else {
+    scoreEl.style.color = '#f78166';
+    document.getElementById('ms-trophy').textContent = '📚';
+  }
+
+  document.getElementById('ms-percent').textContent = percent + '% Score';
+  document.getElementById('ms-percent').style.color = scoreEl.style.color;
+
+  let remark, remarkClass;
+  if (percent >= 90) { remark = '🌟 Excellent! Outstanding Performance!'; remarkClass = 'remark-excellent'; }
+  else if (percent >= 70) { remark = '👍 Great Work! Keep it up!'; remarkClass = 'remark-great'; }
+  else if (percent >= 50) { remark = '🙂 Good Effort! You can do better!'; remarkClass = 'remark-good'; }
+  else { remark = '💪 Keep Trying! Practice More!'; remarkClass = 'remark-try'; }
+
+  const remarkEl = document.getElementById('ms-remark');
+  remarkEl.textContent = remark;
+  remarkEl.className = 'ms-remark ' + remarkClass;
+
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  stopAllTimers();
+  document.getElementById('home-page').style.display = 'block';
+  document.getElementById('quiz-page').style.display = 'none';
+  document.getElementById('marksheet-page').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+
+// ========== INIT ==========
+setDailyQuote();
+</script>
+</body>
+</html>
